@@ -11,6 +11,7 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "laravel/ui": "^3.4",
         "laravolt/indonesia": "^0.33.0",
         "realrashid/sweet-alert": "^5.1",
         "yajra/laravel-datatables-oracle": "^9.21"

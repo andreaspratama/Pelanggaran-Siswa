@@ -10,4 +10,9 @@ class Jnspelang extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function pelanggaran()
+    {
+        return $this->hasMany(Pelanggaran::class);
+    }
 }

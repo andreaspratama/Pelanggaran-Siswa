@@ -20,6 +20,7 @@
                 <form action="{{route('wk.update', $item->id)}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+                    <input type="text" name="oldImage" value="{{$item->ttd}}">
                     <div class="form-group">
                       <label for="nama">Nama Wali Kelas</label>
                       <input type="text" class="form-control" name="nama" placeholder="Masukan Nama Wali Kelas..." value="{{$item->nama}}">
@@ -27,6 +28,20 @@
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="text" class="form-control" name="email" placeholder="Masukan Email..." value="{{$item->email}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="Unit">Unit</label>
+                        <select class="form-control @error('unit_id') is-invalid @enderror" id="unit" name="unit_id">
+                          <option value="{{$item->unit_id}}">{{$item->unit->unit}}</option>
+                          @foreach ($unit as $u)
+                            <option value="{{$u->id}}">{{$u->unit}}</option>
+                          @endforeach
+                        </select>
+                        @error('unit_id')
+                          <div class="invalid-feedback">
+                              {{$message}}
+                          </div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="ttd">Masukan Tanda Tangan</label>

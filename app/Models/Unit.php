@@ -15,4 +15,19 @@ class Unit extends Model
     {
         return $this->hasMany(Kelas::class);
     }
+
+    public function siswa()
+    {
+        return $this->hasMany(Siswa::class);
+    }
+
+    public function wk()
+    {
+        return $this->hasMany(Wk::class);
+    }
+
+    public function user()
+    {
+        return $this->hasMany(User::class);
+    }
 }

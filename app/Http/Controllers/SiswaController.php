@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Siswa;
 use App\Models\User;
+use App\Models\Unit;
+use App\Models\Kelas;
+use App\Models\Subkelas;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\SiswaRequest;
-// use Yajra\DataTables\Facades\DataTables;
+use Yajra\DataTables\Facades\DataTables;
 
 class SiswaController extends Controller
 {
@@ -18,9 +21,39 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        $items = Siswa::orderBy('id', 'desc')->get();
+        // $data = Siswa::all();
+        if(request()->ajax())
+        {
+            $query = Siswa::query();
 
-        return view('pages.admin.siswa.index', compact('items'));
+            return Datatables::of($query)
+                ->addColumn('aksi', function($item) {
+                    return '
+                        <a href="' . route('siswa.edit', $item->id) . '" class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
+                        <form action="' . route('siswa.destroy', $item->id) . '" method="POST" class="d-inline">
+                            ' . method_field('delete') . csrf_field() . '
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                Delete
+                            </button>
+                        </form>
+                    ';
+                })
+                ->editColumn('unit_id', function($item) {
+                    return $item->unit->unit;
+                })
+                ->editColumn('kelas_id', function($item) {
+                    return $item->kelas->kelas;
+                })
+                ->editColumn('sub_id', function($item) {
+                    return $item->sub->sub;
+                })
+                ->rawColumns(['aksi', 'unit_id', 'kelas_id', 'sub_id'])
+                ->make();
+        }
+
+        return view('pages.admin.siswa.index');
     }
 
     /**
@@ -30,7 +63,9 @@ class SiswaController extends Controller
      */
     public function create()
     {
-        return view('pages.admin.siswa.create');
+        $data = Unit::all();
+
+        return view('pages.admin.siswa.create', compact('data'));
     }
 
     /**
@@ -45,14 +80,13 @@ class SiswaController extends Controller
         $user = new User;
         $user->name = $request->nama;
         $user->email = $request->email;
-        $user->password = bcrypt('guru123**');
-        $user->role = 'guru';
+        $user->password = bcrypt('siswa123**');
+        $user->role = 'siswa';
         $user->save();
 
         // Insert ke table siswa
         $request->request->add(['user_id' => $user->id]);
         $siswa = $request->all();
-        $siswa['ttd'] = request()->file('ttd')->store('assets/gttd', 'public');
         Siswa::create($siswa);
         
         return redirect()->route('siswa.index')->with('success', 'Data Berhasil Ditambah');
@@ -78,8 +112,9 @@ class SiswaController extends Controller
     public function edit($id)
     {
         $item = Siswa::findOrFail($id);
+        $unit = Unit::all();
 
-        return view('pages.admin.siswa.edit', compact('item'));
+        return view('pages.admin.siswa.edit', compact('item', 'unit'));
     }
 
     /**
@@ -91,17 +126,17 @@ class SiswaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ubah = Siswa::findOrFail($id);
-        $awal = $ubah->ttd;
+        $data = Siswa::findOrFail($id);
+        $update_siswa = $data->user_id;
 
-        $md = [
-            'nama' => $request['nama'],
-            'email' => $request['email'],
-            'ttd' => $awal,
-        ];
+        // Update data siswa
+        $data->update($request->all());
 
-        $request->ttd->move(public_path().'/storage/assets/gttd', $awal);
-        $ubah->update($md);
+        // Update data user
+        $uBaru = User::findOrFail($update_siswa);
+        $uBaru->name = $request->nama;
+        $uBaru->email = $request->email;
+        $uBaru->save();
 
         return redirect()->route('siswa.index')->with('success', 'Data Berhasil Diubah');
     }
@@ -117,6 +152,25 @@ class SiswaController extends Controller
         $item = Siswa::findOrFail($id);
         $item->delete();
 
+        $hapusSiswa = $item->user_id;
+        User::where('id', $hapusSiswa)->delete();
+
         return redirect()->route('siswa.index')->with('success', 'Data Berhasil Dihapus');
+    }
+
+    public function getKelas(Request $request)
+    {
+        $kelas = Kelas::where('unit_id', $request->unit_id)->get();
+        if (count($kelas) > 0) {
+            return response()->json($kelas);
+        }
+    }
+
+    public function getSubkelas(Request $request)
+    {
+        $sub = Subkelas::where('kelas_id', $request->kelas_id)->get();
+        if (count($sub) > 0) {
+            return response()->json($sub);
+        }
     }
 }

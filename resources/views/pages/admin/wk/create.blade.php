@@ -38,6 +38,20 @@
                         @enderror
                     </div>
                     <div class="form-group">
+                        <label for="Unit">Unit</label>
+                        <select class="form-control @error('unit_id') is-invalid @enderror" id="unit" name="unit_id">
+                          <option>Pilih Unit...</option>
+                          @foreach ($unit as $u)
+                            <option value="{{$u->id}}">{{$u->unit}}</option>
+                          @endforeach
+                        </select>
+                        @error('unit_id')
+                          <div class="invalid-feedback">
+                              {{$message}}
+                          </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
                         <label for="ttd">Masukan Tanda Tangan</label>
                         <input type="file" class="form-control-file @error('ttd') is-invalid @enderror" name="ttd">
                         @error('ttd')

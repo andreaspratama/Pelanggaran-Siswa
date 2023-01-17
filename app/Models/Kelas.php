@@ -15,4 +15,19 @@ class Kelas extends Model
     {
         return $this->belongsTo(Unit::class);
     }
+
+    public function subkelas()
+    {
+        return $this->hasMany(Subkelas::class);
+    }
+
+    public function siswa()
+    {
+        return $this->hasMany(Siswa::class);
+    }
+
+    public function pelanggaran()
+    {
+        return $this->hasMany(Pelanggaran::class);
+    }
 }

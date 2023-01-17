@@ -4,10 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\SubkelasController;
 use App\Http\Controllers\JnspelangController;
 use App\Http\Controllers\WkController;
 use App\Http\Controllers\GbController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\PelanggaranController;
 use App\Http\Controllers\CobaController;
 
 /*
@@ -22,19 +24,54 @@ use App\Http\Controllers\CobaController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
-Route::prefix('admin')->group(function () {
-    Route::get('/', [DashboardController::class, 'index']);
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('/utama', function () {
+        return view('pages.admin.utama');
+    });
 
-    Route::resource('unit', UnitController::class);
-    Route::resource('kelas', KelasController::class);
-    Route::resource('jnspelang', JnspelangController::class);
-    Route::resource('wk', WkController::class);
-    Route::resource('gb', GbController::class);
-    Route::resource('siswa', SiswaController::class);
-
-    Route::get('getKelas', [CobaController::class, 'getKelas'])->name('getKelas');
-    Route::resource('coba', CobaController::class);
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
+
+Route::group(['middleware' => ['auth', 'checkRole:admin']], function(){
+    Route::prefix('admin')->group(function () {
+    
+        Route::resource('unit', UnitController::class);
+        Route::resource('kelas', KelasController::class);
+        Route::resource('subkelas', SubkelasController::class);
+        Route::resource('jnspelang', JnspelangController::class);
+        Route::resource('wk', WkController::class);
+        Route::resource('gb', GbController::class);
+    
+        Route::get('getSubkelas', [SiswaController::class, 'getSubkelas'])->name('getSubkelas');
+        Route::get('getKelasUpdate', [SiswaController::class, 'getKelasUpdate'])->name('getKelasUpdate');
+        Route::get('getSubkelas', [SiswaController::class, 'getSubkelas'])->name('getSubkelas');
+        Route::get('getKelas', [SiswaController::class, 'getKelas'])->name('getKelas');
+        Route::resource('siswa', SiswaController::class);
+    
+        // Route::get('cobaliat', [CobaController::class, 'liat'])->name('cobaliat');
+        // Route::resource('coba', CobaController::class);
+    });
+});
+
+Route::group(['middleware' => ['auth', 'checkRole:siswa']], function(){
+    Route::get('/siswa', function () {
+        return 'Ini halaman siswa';
+    })->name('dashboardSiswa');
+});
+
+Route::group(['middleware' => ['auth', 'checkRole:guru']], function(){
+    Route::get('/guru', function () {
+        return 'Ini halaman guru';
+    })->name('dashboardGuru');
+
+    Route::get('getSiswaPelang', [PelanggaranController::class, 'getSiswaPelang'])->name('getSiswaPelang');
+    Route::get('getSubKelasPelang', [PelanggaranController::class, 'getSubKelasPelang'])->name('getSubKelasPelang');
+    Route::resource('pelanggaran', PelanggaranController::class);
+});
+
+Auth::routes();
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

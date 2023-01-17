@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Unit;
 use App\Models\Kelas;
+use App\Models\Subkelas;
+use App\Models\Coba;
 
 class CobaController extends Controller
 {
@@ -20,12 +22,27 @@ class CobaController extends Controller
         return view('pages.admin.coba', compact('data'));
     }
 
-    public function getKelas(Request $request)
+    // public function getKelas(Request $request)
+    // {
+    //     $kelas = Kelas::where('unit_id', $request->unit_id)->get();
+    //     if (count($kelas) > 0) {
+    //         return response()->json($kelas);
+    //     }
+    // }
+
+    // public function getSubkelas(Request $request)
+    // {
+    //     $sub = Subkelas::where('kelas_id', $request->kelas_id)->get();
+    //     if (count($sub) > 0) {
+    //         return response()->json($sub);
+    //     }
+    // }
+
+    public function liat()
     {
-        $kelas = Kelas::where('unit_id', $request->unit_id)->get();
-        if (count($kelas) > 0) {
-            return response()->json($kelas);
-        }
+        $data = Coba::all();
+
+        return view('pages.admin.cobaliat', compact('data'));
     }
 
     /**
@@ -61,10 +78,11 @@ class CobaController extends Controller
      */
     public function store(Request $request)
     {
-        $kelas = Kelas::where('unit_id', $request->get('id'))
-            ->pluck('unit', 'id');
-    
-        return response()->json($kelas);
+        $data = $request->all();
+        // dd($data);
+        Coba::create($data);
+
+        return redirect()->route('coba.index');
     }
 
     /**

@@ -7,10 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="">
+    <form action="{{route('coba.store')}}" method="POST">
+        @csrf
         <div class="form-group">
             <label for="">Unit</label>
-            <select name="unit" id="unit">
+            <select name="unit_id" id="unit">
                 <option value="">Pilih Unit</option>
                 @foreach ($data as $u)
                     <option value="{{$u->id}}">{{$u->unit}}</option>
@@ -19,10 +20,18 @@
         </div>
         <div class="form-group">
             <label for="">Kelas</label>
-            <select id="kelas" name="kelas">
+            <select id="kelas" name="kelas_id">
                 <option value="">Pilih Kelas</option>
             </select>
         </div>
+        <div class="form-group">
+            <label for="">Sub Kelas</label>
+            <select id="sub" name="sub_id">
+                <option value="">Pilih Sub Kelas</option>
+            </select>
+        </div>
+        <button type="submit">Simpan</button>
+        <a href="{{route('cobaliat')}}" class="btn">Lihat</a>
     </form>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -39,6 +48,22 @@
                         $.each(res, function (key, value) {
                             $('#kelas').append('<option value="' + value
                                 .id + '">' + value.kelas + '</option>');
+                        });
+                        $('#sub').html('<option value="">Select Sub Kelas</option>');
+                    }
+                });
+            });
+            $('#kelas').on('change', function () {
+                var kelasId = this.value;
+                $('#sub').html('');
+                $.ajax({
+                    url: '{{ route('getSubkelas') }}?kelas_id='+kelasId,
+                    type: 'get',
+                    success: function (res) {
+                        $('#sub').html('<option value="">Pilih Sub Kelas</option>');
+                        $.each(res, function (key, value) {
+                            $('#sub').append('<option value="' + value
+                                .id + '">' + value.sub + '</option>');
                         });
                     }
                 });

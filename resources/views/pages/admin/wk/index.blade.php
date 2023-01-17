@@ -25,6 +25,7 @@
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Email</th>
+                                <th>Unit</th>
                                 <th>Tanda Tangan</th>
                                 <th>Aksi</th>
                             </tr>
@@ -35,6 +36,7 @@
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$i->nama}}</td>
                                     <td>{{$i->email}}</td>
+                                    <td>{{$i->unit->unit}}</td>
                                     <td>
                                         <img src="{{Storage::url($i->ttd)}}" alt="" style="width: 150px" class="img-thumbnail">
                                     </td>

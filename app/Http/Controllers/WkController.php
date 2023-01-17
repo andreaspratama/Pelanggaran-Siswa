@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Wk;
 use App\Models\User;
+use App\Models\Unit;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\WkRequest;
 // use Yajra\DataTables\Facades\DataTables;
@@ -30,7 +31,9 @@ class WkController extends Controller
      */
     public function create()
     {
-        return view('pages.admin.wk.create');
+        $unit = Unit::all();
+
+        return view('pages.admin.wk.create', compact('unit'));
     }
 
     /**
@@ -47,6 +50,7 @@ class WkController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt('guru123**');
         $user->role = 'guru';
+        $user->unit_id = $request->unit_id;
         $user->save();
 
         // Insert ke table wk
@@ -78,8 +82,9 @@ class WkController extends Controller
     public function edit($id)
     {
         $item = Wk::findOrFail($id);
+        $unit = Unit::all();
 
-        return view('pages.admin.wk.edit', compact('item'));
+        return view('pages.admin.wk.edit', compact('item', 'unit'));
     }
 
     /**
@@ -91,17 +96,29 @@ class WkController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ubah = Wk::findOrFail($id);
-        $awal = $ubah->ttd;
+        $wk = Wk::findOrFail($id);
+        $s = ('public/'.$wk->ttd);
+        // dd($s);
 
-        $md = [
-            'nama' => $request['nama'],
-            'email' => $request['email'],
-            'ttd' => $awal,
-        ];
+        if(request('ttd')) {
+            Storage::disk('local')->delete($s);
+            $image = request()->file('ttd')->store('assets/gttd', 'public');
+        } elseif($wk->ttd) {
+            $image = $wk->ttd;
+        } else {
+            $image = null;
+        }
 
-        $request->ttd->move(public_path().'/storage/assets/gttd', $awal);
-        $ubah->update($md);
+        $wk->nama = $request->nama;
+        $wk->email = $request->email;
+        $wk->ttd = $image;
+        $wk->save();
+
+        $update_wk = $wk->user_id;
+        $uwk = User::findOrFail($update_wk);
+        $uwk->name = $request->nama;
+        $uwk->email = $request->email;
+        $uwk->save();
 
         return redirect()->route('wk.index')->with('success', 'Data Berhasil Diubah');
     }
