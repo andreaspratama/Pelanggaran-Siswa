@@ -44,6 +44,7 @@
                     <a class="collapse-item" href="{{route('jnspelang.index')}}">Jenis Pelanggaran</a>
                     <a class="collapse-item" href="{{route('wk.index')}}">Wali Kelas</a>
                     <a class="collapse-item" href="{{route('gb.index')}}">Guru BK</a>
+                    <a class="collapse-item" href="{{route('datadiriIndex')}}">Data Diri</a>
                 @endif
                 @if (auth()->user()->role == 'guru')
                     <a class="collapse-item" href="{{route('pelanggaran.create')}}">Input Pelanggaran</a>

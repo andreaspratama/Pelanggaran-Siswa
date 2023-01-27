@@ -48,7 +48,7 @@
                     </div>
                     <div class="form-group">
                         <label for="Unit">Unit</label>
-                        <select class="form-control @error('unit_id') is-invalid @enderror" id="unit" name="unit_id">
+                        <select class="form-control unit @error('unit_id') is-invalid @enderror" id="unit" name="unit_id">
                           <option>Pilih Unit</option>
                           @foreach ($data as $u)
                             <option value="{{$u->id}}">{{$u->unit}}</option>

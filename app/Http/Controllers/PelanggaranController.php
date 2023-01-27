@@ -12,6 +12,10 @@ use App\Models\User;
 use App\Models\Jnspelang;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Storage;
+use App\Exports\PelanggaranExport;
+use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 
 class PelanggaranController extends Controller
 {
@@ -134,7 +138,12 @@ class PelanggaranController extends Controller
      */
     public function edit($id)
     {
-        //
+        $item = Pelanggaran::findOrFail($id);
+        $kelas = Kelas::all();
+        $wk = Wk::all();
+        $jp = Jnspelang::all();
+
+        return view('pages.frontend.pelanggaran.edit', compact('item', 'kelas', 'wk', 'jp'));
     }
 
     /**
@@ -146,7 +155,36 @@ class PelanggaranController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->jnspelang_id == 1) {
+            $jns = 10;
+        } else {
+            $jns = 5;
+        }
+
+        $item = Pelanggaran::findOrFail($id);
+        $up = ('public/'.$item->bukti);
+
+        if(request('bukti')) {
+            Storage::disk('local')->delete($up);
+            $image = request()->file('bukti')->store('assets/bttd', 'public');
+        } elseif($item->bukti) {
+            $image = $item->bukti;
+        } else {
+            $image = null;
+        }
+
+        $item->siswa_id = $request->siswa_id;
+        $item->kelas_id = $request->kelas_id;
+        $item->sub_id = $request->sub_id;
+        $item->pelapor = Auth::user()->name;
+        $item->wk_id = $request->wk_id;
+        $item->jnspelang_id = $request->jnspelang_id;
+        $item->catatan = $request->catatan;
+        $item->point = $jns;
+        $item->bukti = $image;
+        $item->save();
+
+        return redirect()->route('pelanggaran.index')->with('success', 'Data Berhasil Diubah');
     }
 
     /**
@@ -158,5 +196,18 @@ class PelanggaranController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(new PelanggaranExport, 'pelanggaran.xlsx');
+    }
+
+    public function exportPdf()
+    {   
+        $pelanggaran = Pelanggaran::all();
+        $pdf = PDF::loadView('pages.frontend.pelanggaran.template', compact('pelanggaran'))->setPaper('a4', 'landscape');
+
+        return $pdf->stream();
     }
 }

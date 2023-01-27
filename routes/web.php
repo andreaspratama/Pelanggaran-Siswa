@@ -11,6 +11,7 @@ use App\Http\Controllers\GbController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\PelanggaranController;
 use App\Http\Controllers\CobaController;
+use App\Http\Controllers\DatadiriController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,7 +50,13 @@ Route::group(['middleware' => ['auth', 'checkRole:admin']], function(){
         Route::get('getKelasUpdate', [SiswaController::class, 'getKelasUpdate'])->name('getKelasUpdate');
         Route::get('getSubkelas', [SiswaController::class, 'getSubkelas'])->name('getSubkelas');
         Route::get('getKelas', [SiswaController::class, 'getKelas'])->name('getKelas');
+        Route::get('siswa/{id}/pelanggaran', [SiswaController::class, 'point'])->name('ambilPelanggaran');
         Route::resource('siswa', SiswaController::class);
+
+        Route::get('datadiri/{id}/detail', [DatadiriController::class, 'show'])->name('datadiriShow');
+        Route::post('datadiri/tambah/proses', [DatadiriController::class, 'store'])->name('datadiriStore');
+        Route::get('datadiri/tambah', [DatadiriController::class, 'create'])->name('datadiriCreate');
+        Route::get('datadiri', [DatadiriController::class, 'index'])->name('datadiriIndex');
     
         // Route::get('cobaliat', [CobaController::class, 'liat'])->name('cobaliat');
         // Route::resource('coba', CobaController::class);
@@ -69,6 +76,8 @@ Route::group(['middleware' => ['auth', 'checkRole:guru']], function(){
 
     Route::get('getSiswaPelang', [PelanggaranController::class, 'getSiswaPelang'])->name('getSiswaPelang');
     Route::get('getSubKelasPelang', [PelanggaranController::class, 'getSubKelasPelang'])->name('getSubKelasPelang');
+    Route::get('pelanggaranExportPdf', [PelanggaranController::class, 'exportPdf'])->name('pelanggaranExportPdf');
+    Route::get('pelanggaranExportExcel', [PelanggaranController::class, 'exportExcel'])->name('pelanggaranExportExcel');
     Route::resource('pelanggaran', PelanggaranController::class);
 });
 

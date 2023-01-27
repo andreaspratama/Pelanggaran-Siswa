@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Unit;
 use App\Models\Kelas;
 use App\Models\Subkelas;
+use App\Models\Pelanggaran;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\SiswaRequest;
 use Yajra\DataTables\Facades\DataTables;
@@ -31,6 +32,9 @@ class SiswaController extends Controller
                     return '
                         <a href="' . route('siswa.edit', $item->id) . '" class="btn btn-warning btn-sm">
                             Edit
+                        </a>
+                        <a href="' . route('ambilPelanggaran', $item->id) . '" class="btn btn-info btn-sm">
+                            Pelanggaran
                         </a>
                         <form action="' . route('siswa.destroy', $item->id) . '" method="POST" class="d-inline">
                             ' . method_field('delete') . csrf_field() . '
@@ -172,5 +176,15 @@ class SiswaController extends Controller
         if (count($sub) > 0) {
             return response()->json($sub);
         }
+    }
+
+    public function point(Request $request, $id)
+    {
+        $siswa = Siswa::findOrFail($id);
+        $items = Pelanggaran::with('siswa')
+            ->where('siswa_id', $id)
+            ->get();
+        
+        return view('pages.admin.siswa.point', compact('siswa', 'items'));
     }
 }

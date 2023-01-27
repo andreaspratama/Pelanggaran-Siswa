@@ -15,6 +15,8 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Data Pelanggaran Siswa</h6>
+                <a href="{{route('pelanggaranExportExcel')}}" class="btn btn-success btn-sm mt-2">Cetak Excel</a>
+                <a href="{{route('pelanggaranExportPdf')}}" class="btn btn-danger btn-sm mt-2">Cetak PDF</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
