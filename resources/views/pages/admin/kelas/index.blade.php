@@ -33,7 +33,7 @@
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$i->kelas}}</td>
-                                    <td>{{$i->unit->unit}}</td>
+                                    <td>{{$i->unit}}</td>
                                     <td>
                                         <a href="{{route('kelas.edit', $i->id)}}" class="btn btn-warning btn-sm">Edit</a>
                                         <form action="{{route('kelas.destroy', $i->id)}}" method="POST" class="d-inline">

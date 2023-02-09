@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
 use App\Exports\PelanggaranExport;
+use App\Exports\PelanggaranIdExport;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
@@ -36,8 +37,11 @@ class PelanggaranController extends Controller
                         <a href="' . route('pelanggaran.edit', $item->id) . '" class="btn btn-warning btn-sm">
                             Edit
                         </a>
-                        <a href="' . route('pelanggaran.show', $item->id) . '" class="btn btn-info btn-sm">
+                        <a href="' . route('pelanggaran.show', $item->siswa->id) . '" class="btn btn-info btn-sm">
                             Detail
+                        </a>
+                        <a href="' . route('pelanggaranExportExcelId', $item->siswa->id) . '" class="btn btn-success btn-sm">
+                            Export
                         </a>
                         <form action="' . route('pelanggaran.destroy', $item->id) . '" method="POST" class="d-inline">
                             ' . method_field('delete') . csrf_field() . '
@@ -125,9 +129,11 @@ class PelanggaranController extends Controller
      */
     public function show($id)
     {
-        $item = Pelanggaran::findOrFail($id);
+        // $item = Pelanggaran::findOrFail($id);
+        $item = Pelanggaran::where('siswa_id', $id)->first();
+        $items = Pelanggaran::where('siswa_id', $id)->get();
 
-        return view('pages.frontend.pelanggaran.detail', compact('item'));
+        return view('pages.frontend.pelanggaran.detail', compact('items', 'item'));
     }
 
     /**
@@ -203,11 +209,58 @@ class PelanggaranController extends Controller
         return Excel::download(new PelanggaranExport, 'pelanggaran.xlsx');
     }
 
+    public function exportExcelId($id)
+    {
+        $data = Pelanggaran::where('siswa_id', '=', $id)->get();
+
+        return Excel::download(new PelanggaranIdExport($data), 'pelanggaranid.xlsx');
+    }
+
     public function exportPdf()
     {   
         $pelanggaran = Pelanggaran::all();
         $pdf = PDF::loadView('pages.frontend.pelanggaran.template', compact('pelanggaran'))->setPaper('a4', 'landscape');
 
         return $pdf->stream();
+    }
+
+    public function cetakPdfSiswaId($id)
+    {   
+        $pelanggaran = Pelanggaran::where('siswa_id', $id)->get();
+        $pdf = PDF::loadView('pages.frontend.pelanggaran.templateId', compact('pelanggaran'))->setPaper('a4', 'landscape');
+
+        return $pdf->stream();
+    }
+
+    public function pelanggaranSortir()
+    {
+        $kelas = Kelas::all();
+
+        return view('pages.frontend.pelanggaran.sortir', compact('kelas'));
+    }
+
+    public function getSubKelasPelangSortir(Request $request)
+    {
+        $sub = Subkelas::where('kelas_id', $request->kelas_id)->get();
+        if (count($sub) > 0) {
+            return response()->json($sub);
+        }
+    }
+
+    public function getSiswaPelangSortir(Request $request)
+    {
+        $siswa = Siswa::where('sub_id', $request->sub_id)->get();
+        if (count($siswa) > 0) {
+            return response()->json($siswa);
+        }
+    }
+
+    public function proses($siswa)
+    {
+        $cid = Siswa::findOrFail($siswa);
+        $psiswa = Pelanggaran::where('siswa_id', $siswa)->get();
+        $hp = $psiswa->sum('point');
+        // dd($ps);
+        return view('pages.frontend.pelanggaran.sortirList', compact('psiswa', 'cid', 'hp'));
     }
 }

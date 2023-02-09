@@ -18,14 +18,11 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    @foreach ($items as $i)
-                        $jp = (sum($i->point))
-                        @if ($i->jp >= 10)
-                            <div class="alert alert-danger" role="alert">
-                                Point Melebihi Batas
-                            </div>
-                        @endif
-                    @endforeach
+                    @if ($item >= 20)
+                        <div class="alert alert-danger" role="alert">
+                            Point Melebihi Batas
+                        </div>
+                    @endif
                     <table class="table table-bordered table-hover" id="crud" width="100%" cellspacing="0">
                         <thead>
                             <tr>

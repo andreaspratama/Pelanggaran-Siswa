@@ -7,20 +7,92 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Poppins', sans-serif;
+      }
+
+      .container {
+        padding-top: 60px;
+        padding-bottom: 60px;
+      }
+
+      .container .row .logo img{
+        width: 350px;
+        margin-top: 40px;
+        margin-bottom: 40px;
+      }
+
+      .container .row .header h1 {
+        font-size: 50px;
+        color: #1f5dda;
+      }
+
+      .container .row .sapa h3 {
+        font-size: 30px;
+        color: #1f5dda;
+      }
+
+      .container .row .tombol .btn-dashboard {
+        background-color: #1f5dda;
+        padding: 10px 20px 10px 20px;
+        color: #fff;
+        font-size: 18px;
+        border-radius: 15px 0px 15px 0px;
+      }
+
+      .container .row .tombol .btn-dashboard:hover {
+        color: #1f5dda;
+        background-color: transparent;
+        border-color: #1f5dda;
+      }
+    </style>
 
     <title>Hello, world!</title>
   </head>
   <body>
-    <h1>Halaman utama</h1>
-
-    <a href="{{route('dashboard')}}">Dashboard</a>
-
-    Selamat datang {{Auth::user()->name}}
-
-    <form action="{{route('logout')}}" method="POST">
-        @csrf
-        <button class="btn btn-danger">Keluar</button>
-    </form>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 header text-center">
+          <h1>Sistem Pelanggaran Siswa</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 sapa text-center">
+          <h3>Selamat Datang {{Auth::user()->name}}</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 logo text-center">
+          <img src="{{'gambar/yski.png'}}" alt="">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 tombol text-center">
+          <a href="{{route('dashboard')}}" class="btn btn-dashboard">Masuk Dashboard</a>
+        </div>
+      </div>
+    </div>
+    {{-- <div class="container">
+      <div class="row ">
+        <div class="col-lg-6 kiri">
+          <h1>
+            Selamat Datang di Sistem Pelanggaran Siswa
+          </h1>
+          <h3>
+            Sistem ini dibuat guna untuk mencatat semua pelanggaran yang dibuat oleh siswa. Guna menyelenggaran pendidikan lebih baik lagi
+          </h3>
+          <a href="{{route('dashboard')}}" class="btn btn-primary">Masuk Dashboard</a>
+        </div>
+        <div class="col-lg-6 kanan">
+          <img src="{{'gambar/header.png'}}" alt="">
+        </div>
+      </div>
+    </div> --}}
+    
 
     <!-- Optional JavaScript; choose one of the two! -->
 

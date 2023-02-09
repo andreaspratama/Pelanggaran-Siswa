@@ -42,8 +42,10 @@ class KelasController extends Controller
      */
     public function store(KelasRequest $request)
     {
-        $data = $request->all();
-        Kelas::create($data);
+        $kelas = new Kelas;
+        $kelas->unit_id = $request->unit_id;
+        $kelas->kelas = $request->kelas;
+        $kelas->save();
 
         return redirect()->route('kelas.index')->with('success', 'Data Berhasil Ditambah');
     }

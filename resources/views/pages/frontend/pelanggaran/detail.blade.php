@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Detail Pelanggaran {{$item->siswa->nama}}
+    Detail Pelanggaran
 @endsection
 
 @section('content')
@@ -9,53 +9,49 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Data Pelanggaran Siswa {{$item->siswa->nama}}</h1>
+        <h1 class="h3 mb-2 text-gray-800">Data Pelanggaran Siswa</h1>
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Data Pelanggaran Siswa</h6>
+                <a href="{{route('cetakPdfSiswaId', $item->siswa->id)}}" class="btn btn-danger btn-sm mt-3">
+                    Cetak PDF
+                </a>
             </div>
             <div class="card-body">
-                <table class="table table-bordered">
-                    <tr>
-                        <th width="30%">Nama</th>
-                        <td>{{$item->siswa->nama}}</td>
-                    </tr>
-                    <tr>
-                        <th width="30%">Kelas</th>
-                        <td>{{$item->kelas->kelas}}</td>
-                    </tr>
-                    <tr>
-                        <th width="30%">Sub Kelas</th>
-                        <td>{{$item->sub->sub}}</td>
-                    </tr>
-                    <tr>
-                        <th width="30%">Pelapor</th>
-                        <td>{{$item->pelapor}}</td>
-                    </tr>
-                    <tr>
-                        <th width="30%">Wali Kelas</th>
-                        <td>{{$item->wk->nama}}</td>
-                    </tr>
-                    <tr>
-                        <th width="30%">Jenis Pelanggaran</th>
-                        <td>{{$item->jnspelang->jns}}</td>
-                    </tr>
-                    <tr>
-                        <th width="30%">Catatan</th>
-                        <td>{{$item->catatan}}</td>
-                    </tr>
-                    <tr>
-                        <th width="30%">Point</th>
-                        <td>{{$item->point}}</td>
-                    </tr>
-                    <tr>
-                        <th width="30%">Bukti</th>
-                        <td>
-                            <img src="{{Storage::url($item->bukti)}}" alt="" class="img-thumbnail" width="30%">
-                        </td>
-                    </tr>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                      <tr>
+                            <th>No</th>
+                            <th scope="col">Nama</th>
+                            <th scope="col">Kelas</th>
+                            <th scope="col">Pelapor</th>
+                            <th scope="col">Wali Kelas</th>
+                            <th scope="col">Jenis Pelanggaran</th>
+                            <th scope="col">Catatan</th>
+                            <th scope="col">Point</th>
+                            <th scope="col">Bukti</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {{-- <td>{{$pelanggaran->siswa->nama}}</td> --}}
+                        @foreach ($items as $i)
+                            <tr>
+                                <td>{{$loop->iteration}}</td>
+                                <td>{{$i->siswa->nama}}</td>
+                                <td>{{$i->sub->sub}}</td>
+                                <td>{{$i->pelapor}}</td>
+                                <td>{{$i->wk->nama}}</td>
+                                <td>{{$i->jnspelang->jns}}</td>
+                                <td>{{$i->catatan}}</td>
+                                <td>{{$i->point}}</td>
+                                <td>
+                                    <img src="{{Storage::url($i->bukti)}}" alt="" class="img-thumbnail" style="width: 150px;">
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
                 </table>
                 <a href="{{route('pelanggaran.index')}}" class="btn btn-secondary">Kembali</a>
             </div>

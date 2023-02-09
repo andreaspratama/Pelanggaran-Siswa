@@ -184,7 +184,8 @@ class SiswaController extends Controller
         $items = Pelanggaran::with('siswa')
             ->where('siswa_id', $id)
             ->get();
+        $item = Pelanggaran::sum('point');
         
-        return view('pages.admin.siswa.point', compact('siswa', 'items'));
+        return view('pages.admin.siswa.point', compact('siswa', 'items', 'item'));
     }
 }

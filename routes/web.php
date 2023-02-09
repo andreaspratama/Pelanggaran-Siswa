@@ -12,6 +12,7 @@ use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\PelanggaranController;
 use App\Http\Controllers\CobaController;
 use App\Http\Controllers\DatadiriController;
+use App\Http\Controllers\KeluargaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,9 @@ Route::group(['middleware' => ['auth', 'checkRole:admin']], function(){
         Route::get('siswa/{id}/pelanggaran', [SiswaController::class, 'point'])->name('ambilPelanggaran');
         Route::resource('siswa', SiswaController::class);
 
+        Route::get('kel/tambah', [KeluargaController::class, 'create'])->name('kelCreate');
+        Route::get('kel', [KeluargaController::class, 'index'])->name('kelIndex');
+
         Route::get('datadiri/{id}/detail', [DatadiriController::class, 'show'])->name('datadiriShow');
         Route::post('datadiri/tambah/proses', [DatadiriController::class, 'store'])->name('datadiriStore');
         Route::get('datadiri/tambah', [DatadiriController::class, 'create'])->name('datadiriCreate');
@@ -78,6 +82,17 @@ Route::group(['middleware' => ['auth', 'checkRole:guru']], function(){
     Route::get('getSubKelasPelang', [PelanggaranController::class, 'getSubKelasPelang'])->name('getSubKelasPelang');
     Route::get('pelanggaranExportPdf', [PelanggaranController::class, 'exportPdf'])->name('pelanggaranExportPdf');
     Route::get('pelanggaranExportExcel', [PelanggaranController::class, 'exportExcel'])->name('pelanggaranExportExcel');
+
+    // Cetak pdf per id
+    Route::get('cetakPdfSiswaId/{id}', [PelanggaranController::class, 'cetakPdfSiswaId'])->name('cetakPdfSiswaId');
+
+    // Cetak excel per id
+    Route::get('pelanggaranExportExcelId/{id}', [PelanggaranController::class, 'exportExcelId'])->name('pelanggaranExportExcelId');
+
+    Route::get('getSiswaPelangSortir', [PelanggaranController::class, 'getSiswaPelangSortir'])->name('getSiswaPelangSortir');
+    Route::get('getSubKelasPelangSortir', [PelanggaranController::class, 'getSubKelasPelangSortir'])->name('getSubKelasPelangSortir');
+    Route::get('pelanggaranProses/{siswa}', [PelanggaranController::class, 'proses'])->name('pelanggaranProses');
+    Route::get('pelanggaranSortir', [PelanggaranController::class, 'pelanggaranSortir'])->name('pelanggaranSortir');
     Route::resource('pelanggaran', PelanggaranController::class);
 });
 
