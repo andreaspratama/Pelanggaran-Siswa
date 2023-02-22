@@ -40,9 +40,6 @@ class PelanggaranController extends Controller
                         <a href="' . route('pelanggaran.show', $item->siswa->id) . '" class="btn btn-info btn-sm">
                             Detail
                         </a>
-                        <a href="' . route('pelanggaranExportExcelId', $item->siswa->id) . '" class="btn btn-success btn-sm">
-                            Export
-                        </a>
                         <form action="' . route('pelanggaran.destroy', $item->id) . '" method="POST" class="d-inline">
                             ' . method_field('delete') . csrf_field() . '
                             <button type="submit" class="btn btn-danger btn-sm">

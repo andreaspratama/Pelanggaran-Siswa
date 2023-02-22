@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Gb;
 use App\Models\User;
+use App\Models\Unit;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\GbRequest;
 // use Yajra\DataTables\Facades\DataTables;
@@ -30,7 +31,9 @@ class GbController extends Controller
      */
     public function create()
     {
-        return view('pages.admin.gb.create');
+        $unit = Unit::all();
+
+        return view('pages.admin.gb.create', compact('unit'));
     }
 
     /**
@@ -91,17 +94,29 @@ class GbController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ubah = Gb::findOrFail($id);
-        $awal = $ubah->ttd;
+        $gb = Gb::findOrFail($id);
+        $s = ('public/'.$wk->ttd);
+        // dd($s);
 
-        $md = [
-            'nama' => $request['nama'],
-            'email' => $request['email'],
-            'ttd' => $awal,
-        ];
+        if(request('ttd')) {
+            Storage::disk('local')->delete($s);
+            $image = request()->file('ttd')->store('assets/bttd', 'public');
+        } elseif($wk->ttd) {
+            $image = $wk->ttd;
+        } else {
+            $image = null;
+        }
+        
+        $wk->nama = $request->nama;
+        $wk->email = $request->email;
+        $wk->ttd = $image;
+        $wk->save();
 
-        $request->ttd->move(public_path().'/storage/assets/gttd', $awal);
-        $ubah->update($md);
+        $update_wk = $wk->user_id;
+        $uwk = User::findOrFail($update_wk);
+        $uwk->name = $request->nama;
+        $uwk->email = $request->email;
+        $uwk->save();
 
         return redirect()->route('gb.index')->with('success', 'Data Berhasil Diubah');
     }

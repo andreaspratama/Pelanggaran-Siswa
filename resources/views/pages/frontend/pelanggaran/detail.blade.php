@@ -18,6 +18,9 @@
                 <a href="{{route('cetakPdfSiswaId', $item->siswa->id)}}" class="btn btn-danger btn-sm mt-3">
                     Cetak PDF
                 </a>
+                <a href="{{route('pelanggaranExportExcelId', $item->siswa->id)}}" class="btn btn-success btn-sm mt-3">
+                    Cetak Excel
+                </a>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">

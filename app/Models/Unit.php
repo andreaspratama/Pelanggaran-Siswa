@@ -26,6 +26,11 @@ class Unit extends Model
         return $this->hasMany(Wk::class);
     }
 
+    public function gb()
+    {
+        return $this->hasMany(Gb::class);
+    }
+
     public function user()
     {
         return $this->hasMany(User::class);
