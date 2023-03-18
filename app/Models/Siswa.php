@@ -30,4 +30,29 @@ class Siswa extends Model
     {
         return $this->hasMany(Pelanggaran::class);
     }
+
+    public function pelanggarank1()
+    {
+        return $this->hasMany(Pelanggarank1::class);
+    }
+    
+    public function pelanggarank2()
+    {
+        return $this->hasMany(Pelanggarank2::class);
+    }
+
+    public function pelanggarank3()
+    {
+        return $this->hasMany(Pelanggarank3::class);
+    }
+
+    public function pelanggaransmp()
+    {
+        return $this->hasMany(Pelanggaransmp::class);
+    }
+
+    public function pelanggaransma()
+    {
+        return $this->hasMany(Pelanggaransma::class);
+    }
 }

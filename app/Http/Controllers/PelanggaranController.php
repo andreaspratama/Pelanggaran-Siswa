@@ -8,6 +8,7 @@ use App\Models\Siswa;
 use App\Models\Kelas;
 use App\Models\Subkelas;
 use App\Models\Wk;
+use App\Models\Thnakademik;
 use App\Models\User;
 use App\Models\Jnspelang;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,7 @@ class PelanggaranController extends Controller
     {
         if(request()->ajax())
         {
-            $query = Pelanggaran::query();
+            $query = Pelanggaran::query()->where('unit', auth()->user()->unit_id);
 
             return Datatables::of($query)
                 ->addColumn('aksi', function($item) {
@@ -54,7 +55,11 @@ class PelanggaranController extends Controller
                 ->editColumn('siswa_id', function($item) {
                     return $item->siswa->nama;
                 })
-                ->rawColumns(['aksi', 'unit_id', 'kelas_id', 'siswa_id'])
+                ->addColumn('number', function($item) {
+                    static $count = 0;
+                    return ++$count;
+                })
+                ->rawColumns(['aksi', 'unit_id', 'kelas_id', 'siswa_id', 'number'])
                 ->make();
         }
 
@@ -88,8 +93,9 @@ class PelanggaranController extends Controller
         $user = User::all();
         $wk = Wk::all();
         $jp = Jnspelang::all();
+        $thn = Thnakademik::all();
 
-        return view('pages.frontend.pelanggaran.index', compact('kelas', 'user', 'wk', 'jp'));
+        return view('pages.frontend.pelanggaran.index', compact('kelas', 'user', 'wk', 'jp', 'thn'));
     }
 
     /**
@@ -100,16 +106,10 @@ class PelanggaranController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->jnspelang_id == 1) {
-            $jns = 10;
-        } else {
-            $jns = 5;
-        }
-        
-
         $data = $request->all();
-        $data['point'] = $jns;
+        $data['thnakademik'] = request()->thnakademik;
         $data['pelapor'] = Auth::user()->name;
+        $data['unit'] = Auth::user()->unit_id;
         $data['bukti'] = request()->file('bukti')->store('assets/bttd', 'public');
 
         Pelanggaran::create($data);

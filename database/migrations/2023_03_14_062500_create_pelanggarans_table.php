@@ -15,15 +15,15 @@ class CreatePelanggaransTable extends Migration
     {
         Schema::create('pelanggarans', function (Blueprint $table) {
             $table->id();
+            $table->string('thnakademik');
             $table->bigInteger('siswa_id');
             $table->bigInteger('kelas_id');
             $table->bigInteger('sub_id');
             $table->string('pelapor');
-            $table->bigInteger('wk_id');
             $table->bigInteger('jnspelang_id');
             $table->text('catatan');
-            $table->string('point');
             $table->text('bukti');
+            $table->string('unit');
             $table->timestamps();
         });
     }

@@ -30,10 +30,8 @@
                             <th scope="col">Nama</th>
                             <th scope="col">Kelas</th>
                             <th scope="col">Pelapor</th>
-                            <th scope="col">Wali Kelas</th>
                             <th scope="col">Jenis Pelanggaran</th>
                             <th scope="col">Catatan</th>
-                            <th scope="col">Point</th>
                             <th scope="col">Bukti</th>
                       </tr>
                     </thead>
@@ -45,10 +43,8 @@
                                 <td>{{$i->siswa->nama}}</td>
                                 <td>{{$i->sub->sub}}</td>
                                 <td>{{$i->pelapor}}</td>
-                                <td>{{$i->wk->nama}}</td>
                                 <td>{{$i->jnspelang->jns}}</td>
                                 <td>{{$i->catatan}}</td>
-                                <td>{{$i->point}}</td>
                                 <td>
                                     <img src="{{Storage::url($i->bukti)}}" alt="" class="img-thumbnail" style="width: 150px;">
                                 </td>

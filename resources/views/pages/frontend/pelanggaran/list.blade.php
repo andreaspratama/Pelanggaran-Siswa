@@ -59,7 +59,7 @@
                 url: '{!! url()->current() !!}',
             },
             columns: [
-                { data: 'id', name: 'id' },
+                { data: 'number', name: 'number' },
                 { data: 'siswa_id', name: 'siswa_id' },
                 { data: 'kelas_id', name: 'kelas_id' },
                 { data: 'pelapor', name: 'pelapor' },

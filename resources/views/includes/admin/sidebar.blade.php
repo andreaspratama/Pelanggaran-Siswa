@@ -38,9 +38,11 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 @if (auth()->user()->role == 'admin')
                     <a class="collapse-item" href="{{route('siswa.index')}}">Siswa</a>
+                    <a class="collapse-item" href="{{route('guru.index')}}">Guru</a>
                     <a class="collapse-item" href="{{route('unit.index')}}">Unit</a>
                     <a class="collapse-item" href="{{route('kelas.index')}}">Kelas</a>
                     <a class="collapse-item" href="{{route('subkelas.index')}}">Sub Kelas</a>
+                    <a class="collapse-item" href="{{route('thnakademik.index')}}">Tahun Akademik</a>
                     <a class="collapse-item" href="{{route('jnspelang.index')}}">Jenis Pelanggaran</a>
                     <a class="collapse-item" href="{{route('wk.index')}}">Wali Kelas</a>
                     <a class="collapse-item" href="{{route('gb.index')}}">Guru BK</a>

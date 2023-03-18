@@ -7,12 +7,14 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\SubkelasController;
 use App\Http\Controllers\JnspelangController;
 use App\Http\Controllers\WkController;
+use App\Http\Controllers\GuruController;
 use App\Http\Controllers\GbController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\PelanggaranController;
 use App\Http\Controllers\CobaController;
 use App\Http\Controllers\DatadiriController;
 use App\Http\Controllers\KeluargaController;
+use App\Http\Controllers\ThnakademikController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +48,8 @@ Route::group(['middleware' => ['auth', 'checkRole:admin']], function(){
         Route::resource('jnspelang', JnspelangController::class);
         Route::resource('wk', WkController::class);
         Route::resource('gb', GbController::class);
+        Route::resource('guru', GuruController::class);
+        Route::resource('thnakademik', ThnakademikController::class);
     
         Route::get('getSubkelas', [SiswaController::class, 'getSubkelas'])->name('getSubkelas');
         Route::get('getKelasUpdate', [SiswaController::class, 'getKelasUpdate'])->name('getKelasUpdate');

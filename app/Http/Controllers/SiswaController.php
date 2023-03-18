@@ -53,7 +53,11 @@ class SiswaController extends Controller
                 ->editColumn('sub_id', function($item) {
                     return $item->sub->sub;
                 })
-                ->rawColumns(['aksi', 'unit_id', 'kelas_id', 'sub_id'])
+                ->addColumn('number', function($item) {
+                    static $count = 0;
+                    return ++$count;
+                })
+                ->rawColumns(['aksi', 'unit_id', 'kelas_id', 'sub_id', 'number'])
                 ->make();
         }
 

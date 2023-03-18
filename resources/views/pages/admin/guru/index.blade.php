@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Data Pelanggaran Siswa
+    Data Guru
 @endsection
 
 @section('content')
@@ -9,51 +9,49 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Data Pelanggaran Siswa</h1>
+        <h1 class="h3 mb-2 text-gray-800">Data Guru</h1>
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Data Pelanggaran Siswa</h6>
-                <a href="{{route('pelanggaranExportExcelId', $cid->id)}}" class="btn btn-success btn-sm mt-2">Cetak Excel</a>
-                <a href="{{route('cetakPdfSiswaId', $cid->id)}}" class="btn btn-danger btn-sm mt-2">Cetak PDF</a>
+                <h6 class="m-0 font-weight-bold text-primary">Data Guru</h6>
+                <a href="{{route('guru.create')}}" class="btn btn-primary btn-sm mt-2">Tambah Data</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    @if ($hp > 25)
-                        <div class="alert alert-danger" role="alert">
-                            Point Melebihi Batas
-                        </div>
-                    @endif
-                    <table class="table table-bordered table-hover" id="crudPelanggaran" width="100%" cellspacing="0">
+                    <table class="table table-bordered table-hover" id="crud" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
-                                <th>Kelas</th>
-                                <th>Pelapor</th>
-                                <th>Catatan</th>
-                                <th>Point</th>
-                                <th>Bukti</th>
+                                <th>Email</th>
+                                <th>Unit</th>
+                                <th>Tanda Tangan</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($psiswa as $ps)
+                            @foreach ($items as $i)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{{$ps->siswa->nama}}</td>
-                                    <td>{{$ps->kelas->kelas}}</td>
-                                    <td>{{$ps->pelapor}}</td>
-                                    <td>{{$ps->catatan}}</td>
-                                    <td>{{$ps->point}}</td>
+                                    <td>{{$i->nama}}</td>
+                                    <td>{{$i->email}}</td>
+                                    <td>{{$i->unit->unit}}</td>
                                     <td>
-                                        <img src="{{Storage::url($ps->bukti)}}" alt="" class="img-thumbnail" style="width: 200px">
+                                        <img src="{{Storage::url($i->ttd)}}" alt="" style="width: 150px" class="img-thumbnail">
+                                    </td>
+                                    <td>
+                                        <a href="{{route('guru.edit', $i->id)}}" class="btn btn-warning btn-sm">Edit</a>
+                                        <form action="{{route('guru.destroy', $i->id)}}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    <a href="{{route('pelanggaranSortir')}}" class="btn btn-secondary">Kembali</a>
                 </div>
             </div>
         </div>
@@ -74,7 +72,7 @@
     <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#crudPelanggaran').DataTable();
+            $('#crud').DataTable();
         });
     </script>
 @endpush

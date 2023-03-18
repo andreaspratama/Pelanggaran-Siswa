@@ -16,13 +16,16 @@
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Data Siswa</h6>
                 <a href="{{route('siswa.create')}}" class="btn btn-primary btn-sm mt-2">Tambah Data</a>
+                <button type="button" class="btn btn-success btn-sm mt-2" data-toggle="modal" data-target="#exampleModal">
+                    Import Excel
+                </button>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover" id="crudSiswa" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Id</th>
+                                <th>No</th>
                                 <th>Nama</th>
                                 <th>Nisn</th>
                                 <th>Unit</th>
@@ -60,7 +63,7 @@
                 url: '{!! url()->current() !!}',
             },
             columns: [
-                { data: 'id', name: 'id' },
+                { data: 'number', name: 'number' },
                 { data: 'nama', name: 'nama' },
                 { data: 'nisn', name: 'nisn' },
                 { data: 'unit_id', name: 'unit_id' },

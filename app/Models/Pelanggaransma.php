@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pelanggaran extends Model
+class Pelanggaransma extends Model
 {
     use HasFactory;
 
@@ -34,10 +34,5 @@ class Pelanggaran extends Model
     public function jnspelang()
     {
         return $this->belongsTo(Jnspelang::class);
-    }
-
-    public function thnakademik()
-    {
-        return $this->belongsTo(Thnakademik::class);
     }
 }

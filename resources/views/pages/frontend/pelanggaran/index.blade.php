@@ -20,6 +20,16 @@
                 <form action="{{route('pelanggaran.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
+                        <label for="thnakademik_id">Tahun Akademik</label>
+                        @foreach ($thn as $i)
+                            @if ($i->status === 'Aktif')
+                                <select class="form-control" id="exampleFormControlSelect1" name="thnakademik">
+                                    <option value="{{$i->thn}} / {{$i->sem}}">{{$i->thn}} / {{$i->sem}}</option>
+                                </select>
+                            @endif
+                        @endforeach
+                    </div>
+                    <div class="form-group">
                         <label for="Kelas">Kelas</label>
                         <select class="form-control @error('kelas_id') is-invalid @enderror" id="kelas" name="kelas_id">
                           <option>Pilih Kelas</option>
@@ -52,20 +62,6 @@
                           <option value="">Pilih Siswa</option>
                         </select>
                         @error('siswa_id')
-                          <div class="invalid-feedback">
-                              {{$message}}
-                          </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="Wali Kelas">Wali Kelas</label>
-                        <select class="form-control @error('wk_id') is-invalid @enderror" id="kelas" name="wk_id">
-                          <option>Pilih Wali Kelas</option>
-                          @foreach ($wk as $w)
-                            <option value="{{$w->id}}">{{$w->nama}}</option>
-                          @endforeach
-                        </select>
-                        @error('wk_id')
                           <div class="invalid-feedback">
                               {{$message}}
                           </div>
