@@ -43,7 +43,22 @@ class GuruController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Insert ke table user
+        $user = new User;
+        $user->name = $request->nama;
+        $user->email = $request->email;
+        $user->password = bcrypt('guru123**');
+        $user->role = 'guru';
+        $user->unit_id = $request->unit_id;
+        $user->save();
+
+        // Insert ke table wk
+        $request->request->add(['user_id' => $user->id]);
+        $guru = $request->all();
+        $guru['ttd'] = request()->file('ttd')->store('assets/gttd', 'public');
+        Guru::create($guru);
+        
+        return redirect()->route('guru.index')->with('success', 'Data Berhasil Ditambah');
     }
 
     /**
@@ -65,7 +80,10 @@ class GuruController extends Controller
      */
     public function edit($id)
     {
-        //
+        $item = Guru::findOrFail($id);
+        $unit = Unit::all();
+
+        return view('pages.admin.guru.edit', compact('item', 'unit'));
     }
 
     /**
@@ -77,7 +95,31 @@ class GuruController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $guru = Guru::findOrFail($id);
+        $s = ('public/'.$guru->ttd);
+        // dd($s);
+
+        if(request('ttd')) {
+            Storage::disk('local')->delete($s);
+            $image = request()->file('ttd')->store('assets/gttd', 'public');
+        } elseif($guru->ttd) {
+            $image = $guru->ttd;
+        } else {
+            $image = null;
+        }
+
+        $guru->nama = $request->nama;
+        $guru->email = $request->email;
+        $guru->ttd = $image;
+        $guru->save();
+
+        $update_guru = $guru->user_id;
+        $uguru = User::findOrFail($update_guru);
+        $uguru->name = $request->nama;
+        $uguru->email = $request->email;
+        $uguru->save();
+
+        return redirect()->route('guru.index')->with('success', 'Data Berhasil Diubah');
     }
 
     /**
@@ -88,6 +130,9 @@ class GuruController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = Guru::findOrFail($id);
+        $item->delete();
+
+        return redirect()->route('guru.index')->with('success', 'Data Berhasil Dihapus');
     }
 }

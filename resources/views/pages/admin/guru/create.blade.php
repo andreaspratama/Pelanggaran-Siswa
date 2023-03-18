@@ -17,7 +17,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">Tambah Data Guru</h6>
             </div>
             <div class="card-body">
-                <form action="{{route('wk.store')}}" method="POST" enctype="multipart/form-data">
+                <form action="{{route('guru.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                       <label for="nama">Nama Guru</label>
