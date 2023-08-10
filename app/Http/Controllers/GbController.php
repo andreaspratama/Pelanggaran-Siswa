@@ -7,7 +7,9 @@ use App\Models\Gb;
 use App\Models\User;
 use App\Models\Unit;
 use Illuminate\Support\Facades\Storage;
+use App\Imports\GuruBkImport;
 use App\Http\Requests\GbRequest;
+use Maatwebsite\Excel\Facades\Excel;
 // use Yajra\DataTables\Facades\DataTables;
 
 class GbController extends Controller
@@ -50,6 +52,7 @@ class GbController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt('guru123**');
         $user->role = 'gurubk';
+        $user->unit_id = $request->unit_id;
         $user->save();
 
         // Insert ke table gb
@@ -133,5 +136,18 @@ class GbController extends Controller
         $item->delete();
 
         return redirect()->route('gb.index')->with('success', 'Data Berhasil Dihapus');
+    }
+
+    public function importExcelGuruBk(Request $request)
+    {
+        // Excel::import(new SiswaImport, $request->file('DataSiswa'));
+        $file = $request->file('file');
+        // dd($file);
+        $namaFile = $file->getClientOriginalName();
+        $file->move('DataGuruBk', $namaFile);
+
+        Excel::import(new GuruBkImport, public_path('/DataGuruBk/'.$namaFile));
+
+        return redirect()->route('gb.index')->with('success', 'Data Berhasil Ditambahkan');
     }
 }

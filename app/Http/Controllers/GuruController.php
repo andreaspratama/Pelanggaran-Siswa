@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Guru;
 use App\Models\User;
 use App\Models\Unit;
+use App\Imports\GuruImport;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\GuruRequest;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GuruController extends Controller
 {
@@ -134,5 +136,18 @@ class GuruController extends Controller
         $item->delete();
 
         return redirect()->route('guru.index')->with('success', 'Data Berhasil Dihapus');
+    }
+
+    public function importExcelGuru(Request $request)
+    {
+        // Excel::import(new SiswaImport, $request->file('DataSiswa'));
+        $file = $request->file('file');
+        // dd($file);
+        $namaFile = $file->getClientOriginalName();
+        $file->move('DataGuru', $namaFile);
+
+        Excel::import(new GuruImport, public_path('/DataGuru/'.$namaFile));
+
+        return redirect()->route('guru.index')->with('success', 'Data Berhasil Ditambahkan');
     }
 }

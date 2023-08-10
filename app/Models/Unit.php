@@ -31,7 +31,7 @@ class Unit extends Model
         return $this->hasMany(Gb::class);
     }
 
-    public function user()
+    public function userUnit()
     {
         return $this->hasMany(User::class);
     }

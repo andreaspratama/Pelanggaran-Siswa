@@ -20,13 +20,13 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover" id="crudPelanggaran" width="100%" cellspacing="0">
+                    <table class="table table-bordered table-hover" id="pelang" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>Id</th>
                                 <th>Nama</th>
                                 <th>Kelas</th>
-                                <th>Pelapor</th>
+                                <th>Tanggal</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -51,7 +51,7 @@
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
     <script>
-        var datatable = $('#crudPelanggaran').DataTable({
+        var datatable = $('#pelang').DataTable({
             processing: true,
             serverSide: true,
             ordering: true,
@@ -62,7 +62,7 @@
                 { data: 'number', name: 'number' },
                 { data: 'siswa_id', name: 'siswa_id' },
                 { data: 'kelas_id', name: 'kelas_id' },
-                { data: 'pelapor', name: 'pelapor' },
+                { data: 'tgl', name: 'tgl' },
                 {
                     data: 'aksi',
                     name: 'aksi',

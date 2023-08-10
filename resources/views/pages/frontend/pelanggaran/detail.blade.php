@@ -29,9 +29,10 @@
                             <th>No</th>
                             <th scope="col">Nama</th>
                             <th scope="col">Kelas</th>
-                            <th scope="col">Pelapor</th>
+                            <th scope="col">Tanggal</th>
                             <th scope="col">Jenis Pelanggaran</th>
                             <th scope="col">Catatan</th>
+                            <th scope="col">Tindak Lanjut</th>
                             <th scope="col">Bukti</th>
                       </tr>
                     </thead>
@@ -42,9 +43,10 @@
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$i->siswa->nama}}</td>
                                 <td>{{$i->sub->sub}}</td>
-                                <td>{{$i->pelapor}}</td>
+                                <td>{{$i->tgl}}</td>
                                 <td>{{$i->jnspelang->jns}}</td>
                                 <td>{{$i->catatan}}</td>
+                                <td>{{$i->lanjutan}}</td>
                                 <td>
                                     <img src="{{Storage::url($i->bukti)}}" alt="" class="img-thumbnail" style="width: 150px;">
                                 </td>

@@ -58,7 +58,7 @@
                           </div>
                         @enderror
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="Wali Kelas">Wali Kelas</label>
                         <select class="form-control @error('wk_id') is-invalid @enderror" id="kelas" name="wk_id">
                           <option value="{{$item->wk_id}}">{{$item->wk->nama}}</option>
@@ -71,7 +71,7 @@
                               {{$message}}
                           </div>
                         @enderror
-                    </div>
+                    </div> --}}
                     <div class="form-group">
                         <label for="Jenis Pelanggaran">Jenis Pelanggaran</label>
                         <select class="form-control @error('jnspelang_id') is-invalid @enderror" name="jnspelang_id">
@@ -89,6 +89,10 @@
                     <div class="form-group">
                         <label for="catatan">Catatan</label>
                         <textarea class="form-control" id="catatan" rows="3" name="catatan">{{$item->catatan}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="lanjutan">Tindak Lanjut</label>
+                        <textarea class="form-control" id="lanjutan" rows="3" name="lanjutan">{{$item->lanjutan}}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="bukti">Bukti</label>

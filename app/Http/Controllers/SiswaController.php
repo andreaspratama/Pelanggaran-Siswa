@@ -9,9 +9,11 @@ use App\Models\Unit;
 use App\Models\Kelas;
 use App\Models\Subkelas;
 use App\Models\Pelanggaran;
+use App\Imports\SiswaImport;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\SiswaRequest;
 use Yajra\DataTables\Facades\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SiswaController extends Controller
 {
@@ -188,8 +190,21 @@ class SiswaController extends Controller
         $items = Pelanggaran::with('siswa')
             ->where('siswa_id', $id)
             ->get();
-        $item = Pelanggaran::sum('point');
+        // $item = Pelanggaran::sum('point');
         
-        return view('pages.admin.siswa.point', compact('siswa', 'items', 'item'));
+        return view('pages.admin.siswa.point', compact('siswa', 'items'));
+    }
+
+    public function importExcelSiswa(Request $request)
+    {
+        // Excel::import(new SiswaImport, $request->file('DataSiswa'));
+        $file = $request->file('file');
+        // dd($file);
+        $namaFile = $file->getClientOriginalName();
+        $file->move('DataSiswa', $namaFile);
+
+        Excel::import(new SiswaImport, public_path('/DataSiswa/'.$namaFile));
+
+        return redirect()->route('siswa.index')->with('success', 'Data Berhasil Ditambahkan');
     }
 }

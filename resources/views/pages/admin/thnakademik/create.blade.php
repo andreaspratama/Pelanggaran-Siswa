@@ -40,8 +40,8 @@
                         <label for="status">Status</label>
                         <select class="form-control" id="status" name="status">
                           <option>-- Pilih Status --</option>
-                          <option>Aktif</option>
-                          <option>Tidak Aktif</option>
+                          <option value="Aktif">Aktif</option>
+                          <option value="Tidak Aktif">Tidak Aktif</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>

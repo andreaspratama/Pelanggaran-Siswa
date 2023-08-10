@@ -18,17 +18,16 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    @if ($item >= 20)
+                    {{-- @if ($item >= 20)
                         <div class="alert alert-danger" role="alert">
                             Point Melebihi Batas
                         </div>
-                    @endif
+                    @endif --}}
                     <table class="table table-bordered table-hover" id="crud" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>No</th>
                                 <th>Pelanggaran</th>
-                                <th>Point</th>
                                 <th>Pelapor</th>
                             </tr>
                         </thead>
@@ -37,7 +36,6 @@
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$i->jnspelang->jns}}</td>
-                                    <td>{{$i->point}}</td>
                                     <td>{{$i->pelapor}}</td>
                                 </tr>
                             @endforeach

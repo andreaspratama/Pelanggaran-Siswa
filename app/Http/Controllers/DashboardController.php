@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pelanggaran;
 use App\Models\Siswa;
+// use App\Models\Pelanggaran;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -15,9 +16,18 @@ class DashboardController extends Controller
         if(request()->ajax())
         {
             $query = Siswa::query()->withCount('pelanggaran')
-            ->orderByDesc('pelanggaran_count')
-            ->where('unit_id', auth()->user()->unit_id)
-            ->get();
+                ->orderByDesc('pelanggaran_count')
+                ->take(3)
+                ->where('unit_id', auth()->user()->unit_id)
+                ->get();
+            // if ('pelanggaran' > 0) {
+            //     withCount('pelanggaran')
+            //     ->orderByDesc('pelanggaran_count')
+            //     ->where('unit_id', auth()->user()->unit_id)
+            //     ->get();
+            // } else {
+            //     'tidak';
+            // }
 
             return Datatables::of($query)
                 ->addColumn('number', function($item) {

@@ -14,7 +14,7 @@ class AddUnitIdToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->bigInteger('unit_id')->nullable();
+            $table->bigInteger('unit_id');
         });
     }
 

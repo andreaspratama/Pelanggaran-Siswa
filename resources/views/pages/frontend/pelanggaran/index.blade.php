@@ -34,6 +34,7 @@
                         <select class="form-control @error('kelas_id') is-invalid @enderror" id="kelas" name="kelas_id">
                           <option>Pilih Kelas</option>
                           @foreach ($kelas as $k)
+                            {{-- <option value="{{$k->id}}">{{$k->kelas}}</option> --}}
                             @if (auth()->user()->unit_id === $k->unit_id)
                                 <option value="{{$k->id}}">{{$k->kelas}}</option>
                             @endif
@@ -82,8 +83,12 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="catatan">Catatan</label>
+                        <label for="catatan">Peristiwa</label>
                         <textarea class="form-control" id="catatan" rows="3" name="catatan"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="lanjutan">Tindak Lanjut</label>
+                        <textarea class="form-control" id="lanjutan" rows="3" name="lanjutan"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="bukti">Bukti</label>

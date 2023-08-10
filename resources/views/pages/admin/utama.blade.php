@@ -57,7 +57,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12 header text-center">
-          <h1>Sistem Pelanggaran Siswa</h1>
+          <h1>Student Care System</h1>
         </div>
       </div>
       <div class="row">

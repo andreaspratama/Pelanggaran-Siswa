@@ -37,7 +37,7 @@
                                     <td>{{$i->sem}}</td>
                                     <td>{{$i->status}}</td>
                                     <td>
-                                        <a href="{{route('thnakademik.edit', $i->id)}}" class="btn btn-warning btn-sm">Edit</a>
+                                        <a href="{{route('thnakademik.edit', $i->id)}}" class="btn btn-warning btn-sm">edit</a>
                                         <form action="{{route('thnakademik.destroy', $i->id)}}" method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')

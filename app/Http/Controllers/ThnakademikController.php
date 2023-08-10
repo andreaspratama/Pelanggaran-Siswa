@@ -52,7 +52,7 @@ class ThnakademikController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -63,7 +63,9 @@ class ThnakademikController extends Controller
      */
     public function edit($id)
     {
-        //
+        $item = Thnakademik::findOrFail($id);
+
+        return view('pages.admin.thnakademik.edit', compact('item'));
     }
 
     /**
@@ -75,7 +77,11 @@ class ThnakademikController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+        $item = Thnakademik::findOrFail($id);
+        $item->update($data);
+
+        return redirect()->route('thnakademik.index')->with('success', 'Data Berhasil Diubah');
     }
 
     /**
@@ -86,6 +92,9 @@ class ThnakademikController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = Thnakademik::findOrFail($id);
+        $item->delete();
+
+        return redirect()->route('thnakademik.index')->with('success', 'Data Berhasil Dihapus');
     }
 }

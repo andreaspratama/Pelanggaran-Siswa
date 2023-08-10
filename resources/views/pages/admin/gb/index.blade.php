@@ -16,6 +16,11 @@
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Data Guru BK</h6>
                 <a href="{{route('gb.create')}}" class="btn btn-primary btn-sm mt-2">Tambah Data</a>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-success btn-sm mt-2" data-toggle="modal" data-target="#exampleModal">
+                    Import Data
+                </button>
+                <!-- Modal -->
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -58,6 +63,29 @@
     <!-- /.container-fluid -->
     @include('sweetalert::alert')
 @endsection
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Import Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <form method="POST" action="{{route('importExcelGuruBk')}}" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                <label for="file">Pilih File</label>
+                <input type="file" class="form-control-file" id="file" name="file">
+                </div>
+                <button class="btn btn-primary float-right" type="submit">Import</button>
+            </form>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
 
 @push('prepend-style')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">

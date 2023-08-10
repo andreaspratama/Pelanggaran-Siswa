@@ -39,10 +39,8 @@
                 <th scope="col">Nama</th>
                 <th scope="col">Kelas</th>
                 <th scope="col">Pelapor</th>
-                <th scope="col">Wali Kelas</th>
                 <th scope="col">Jenis Pelanggaran</th>
                 <th scope="col">Catatan</th>
-                <th scope="col">Point</th>
                 <th scope="col">Bukti</th>
           </tr>
         </thead>
@@ -53,10 +51,8 @@
                     <td>{{$p->siswa->nama}}</td>
                     <td>{{$p->sub->sub}}</td>
                     <td>{{$p->pelapor}}</td>
-                    <td>{{$p->wk->nama}}</td>
                     <td>{{$p->jnspelang->jns}}</td>
                     <td>{{$p->catatan}}</td>
-                    <td>{{$p->point}}</td>
                     <td>
                         <img src="{{storage_path("app/public/" . $p->bukti)}}" alt="" class="img-thumbnail" width="100px">
                     </td>

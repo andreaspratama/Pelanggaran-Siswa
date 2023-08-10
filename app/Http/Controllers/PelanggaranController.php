@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Exports\PelanggaranExport;
 use App\Exports\PelanggaranIdExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 use PDF;
 
 class PelanggaranController extends Controller
@@ -108,6 +109,7 @@ class PelanggaranController extends Controller
     {
         $data = $request->all();
         $data['thnakademik'] = request()->thnakademik;
+        $data['tgl'] = Carbon::now();
         $data['pelapor'] = Auth::user()->name;
         $data['unit'] = Auth::user()->unit_id;
         $data['bukti'] = request()->file('bukti')->store('assets/bttd', 'public');
@@ -180,11 +182,12 @@ class PelanggaranController extends Controller
         $item->kelas_id = $request->kelas_id;
         $item->sub_id = $request->sub_id;
         $item->pelapor = Auth::user()->name;
-        $item->wk_id = $request->wk_id;
+        $item->lanjutan = $request->lanjutan;
         $item->jnspelang_id = $request->jnspelang_id;
         $item->catatan = $request->catatan;
-        $item->point = $jns;
+        // $item->point = $jns;
         $item->bukti = $image;
+        $item->tgl = Carbon::now();
         $item->save();
 
         return redirect()->route('pelanggaran.index')->with('success', 'Data Berhasil Diubah');
@@ -198,7 +201,10 @@ class PelanggaranController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = Pelanggaran::findOrFail($id);
+        $item->delete();
+
+        return redirect()->route('pelanggaran.index')->with('success', 'Data Berhasil Dihapus');
     }
 
     public function exportExcel()

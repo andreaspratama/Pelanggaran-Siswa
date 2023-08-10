@@ -36,7 +36,7 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                @if (auth()->user()->role == 'admin')
+                @if (auth()->user()->role === 'admin')
                     <a class="collapse-item" href="{{route('siswa.index')}}">Siswa</a>
                     <a class="collapse-item" href="{{route('guru.index')}}">Guru</a>
                     <a class="collapse-item" href="{{route('unit.index')}}">Unit</a>
@@ -46,10 +46,14 @@
                     <a class="collapse-item" href="{{route('jnspelang.index')}}">Jenis Pelanggaran</a>
                     <a class="collapse-item" href="{{route('wk.index')}}">Wali Kelas</a>
                     <a class="collapse-item" href="{{route('gb.index')}}">Guru BK</a>
-                    <a class="collapse-item" href="{{route('datadiriIndex')}}">Data Diri</a>
-                    <a class="collapse-item" href="{{route('kelCreate')}}">Kel</a>
+                    <a class="collapse-item" href="{{route('user.index')}}">User</a>
                 @endif
-                @if (auth()->user()->role == 'guru')
+                @if (auth()->user()->role === 'guru')
+                    <a class="collapse-item" href="{{route('pelanggaran.create')}}">Input Pelanggaran</a>
+                    <a class="collapse-item" href="{{route('pelanggaran.index')}}">List Pelanggaran</a>
+                    <a class="collapse-item" href="{{route('pelanggaranSortir')}}">List Pelanggaran Siswa</a>
+                @endif
+                @if (auth()->user()->role === 'gurubk')
                     <a class="collapse-item" href="{{route('pelanggaran.create')}}">Input Pelanggaran</a>
                     <a class="collapse-item" href="{{route('pelanggaran.index')}}">List Pelanggaran</a>
                     <a class="collapse-item" href="{{route('pelanggaranSortir')}}">List Pelanggaran Siswa</a>
