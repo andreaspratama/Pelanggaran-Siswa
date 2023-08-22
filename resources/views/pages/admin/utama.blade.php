@@ -67,12 +67,17 @@
       </div>
       <div class="row">
         <div class="col-lg-12 logo text-center">
-          <img src="{{'gambar/yski.png'}}" alt="">
+          <img src="{{'gambar/yski.png'}}" alt="" style="width: 300px">
         </div>
       </div>
       <div class="row">
         <div class="col-lg-12 tombol text-center">
           <a href="{{route('dashboard')}}" class="btn btn-dashboard">Masuk Dashboard</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 tombol text-center mt-2">
+          <a href="{{route('mobile')}}" class="btn btn-dashboard">Input Pelanggaran</a>
         </div>
       </div>
     </div>

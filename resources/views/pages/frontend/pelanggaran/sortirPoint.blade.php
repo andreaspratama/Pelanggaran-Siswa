@@ -45,7 +45,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <a href="{{route('siswa.index')}}" class="btn btn-secondary">Kembali</a>
+                    <a href="{{route('pelanggaranProsesKelas', $sb->id)}}" class="btn btn-secondary">Kembali</a>
                 </div>
             </div>
         </div>

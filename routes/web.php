@@ -12,6 +12,7 @@ use App\Http\Controllers\GbController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PelanggaranController;
+use App\Http\Controllers\PelanggaranmobileController;
 use App\Http\Controllers\CobaController;
 use App\Http\Controllers\DatadiriController;
 use App\Http\Controllers\KeluargaController;
@@ -40,7 +41,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
-Route::group(['middleware' => ['auth', 'checkRole:admin']], function(){
+Route::group(['middleware' => ['auth', 'checkRole:admin,gurubk']], function(){
     Route::prefix('admin')->group(function () {
     
         Route::resource('unit', UnitController::class);
@@ -127,6 +128,15 @@ Route::group(['middleware' => ['auth', 'checkRole:gurubk,guru']], function(){
     Route::get('pelanggaranProses/{siswa}', [PelanggaranController::class, 'proses'])->name('pelanggaranProses');
     Route::get('pelanggaranSortir', [PelanggaranController::class, 'pelanggaranSortir'])->name('pelanggaranSortir');
     Route::resource('pelanggaran', PelanggaranController::class);
+
+    // Sortir Per Kelas
+    Route::get('getSubKelasSortir', [PelanggaranController::class, 'getSubKelasSortir'])->name('getSubKelasSortir');
+    Route::get('pelanggaranProsesKelas/{sub}', [PelanggaranController::class, 'prosesKelas'])->name('pelanggaranProsesKelas');
+    Route::get('siswa/{id}/{sub}/sortir', [PelanggaranController::class, 'sortir'])->name('sortirKelas');
+
+    // Mobil User
+    Route::get('mobile', [PelanggaranmobileController::class, 'index'])->name('mobile');
+    Route::post('mobileStore', [PelanggaranmobileController::class, 'mobileStore'])->name('mobileStore');
 });
 
 Auth::routes();

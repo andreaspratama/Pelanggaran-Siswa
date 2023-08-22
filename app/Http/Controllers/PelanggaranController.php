@@ -29,42 +29,43 @@ class PelanggaranController extends Controller
      */
     public function index()
     {
-        if(request()->ajax())
-        {
-            $query = Pelanggaran::query()->where('unit', auth()->user()->unit_id);
+        // if(request()->ajax())
+        // {
+        //     $query = Pelanggaran::query()->where('unit', auth()->user()->unit_id);
 
-            return Datatables::of($query)
-                ->addColumn('aksi', function($item) {
-                    return '
-                        <a href="' . route('pelanggaran.edit', $item->id) . '" class="btn btn-warning btn-sm">
-                            Edit
-                        </a>
-                        <a href="' . route('pelanggaran.show', $item->siswa->id) . '" class="btn btn-info btn-sm">
-                            Detail
-                        </a>
-                        <form action="' . route('pelanggaran.destroy', $item->id) . '" method="POST" class="d-inline">
-                            ' . method_field('delete') . csrf_field() . '
-                            <button type="submit" class="btn btn-danger btn-sm">
-                                Delete
-                            </button>
-                        </form>
-                    ';
-                })
-                ->editColumn('kelas_id', function($item) {
-                    return $item->kelas->kelas;
-                })
-                ->editColumn('siswa_id', function($item) {
-                    return $item->siswa->nama;
-                })
-                ->addColumn('number', function($item) {
-                    static $count = 0;
-                    return ++$count;
-                })
-                ->rawColumns(['aksi', 'unit_id', 'kelas_id', 'siswa_id', 'number'])
-                ->make();
-        }
+        //     return Datatables::of($query)
+        //         ->addColumn('aksi', function($item) {
+        //             return '
+        //                 <a href="' . route('pelanggaran.edit', $item->id) . '" class="btn btn-warning btn-sm">
+        //                     Edit
+        //                 </a>
+        //                 <a href="' . route('pelanggaran.show', $item->siswa->id) . '" class="btn btn-info btn-sm">
+        //                     Detail
+        //                 </a>
+        //                 <form action="' . route('pelanggaran.destroy', $item->id) . '" method="POST" class="d-inline">
+        //                     ' . method_field('delete') . csrf_field() . '
+        //                     <button type="submit" class="btn btn-danger btn-sm">
+        //                         Delete
+        //                     </button>
+        //                 </form>
+        //             ';
+        //         })
+        //         ->editColumn('kelas_id', function($item) {
+        //             return $item->kelas->kelas;
+        //         })
+        //         ->editColumn('siswa_id', function($item) {
+        //             return $item->siswa->nama;
+        //         })
+        //         ->addColumn('number', function($item) {
+        //             static $count = 0;
+        //             return ++$count;
+        //         })
+        //         ->rawColumns(['aksi', 'unit_id', 'kelas_id', 'siswa_id', 'number'])
+        //         ->make();
+        // }
+        $kelas = Kelas::all();
 
-        return view('pages.frontend.pelanggaran.list');
+        return view('pages.frontend.pelanggaran.list', compact('kelas'));
     }
 
     public function getSubKelasPelang(Request $request)
@@ -117,7 +118,7 @@ class PelanggaranController extends Controller
         Pelanggaran::create($data);
 
         // dd($data);
-        return redirect()->route('pelanggaran.index')->with('success', 'Data Berhasil Ditambah');
+        return redirect()->route('pelanggaran.create')->with('success', 'Data Berhasil Ditambah');
     }
 
     /**
@@ -235,6 +236,9 @@ class PelanggaranController extends Controller
         return $pdf->stream();
     }
 
+
+    // Sortir Per Siswa
+
     public function pelanggaranSortir()
     {
         $kelas = Kelas::all();
@@ -265,5 +269,36 @@ class PelanggaranController extends Controller
         $hp = $psiswa->sum('point');
         // dd($ps);
         return view('pages.frontend.pelanggaran.sortirList', compact('psiswa', 'cid', 'hp'));
+    }
+
+    // Sortir Per Kelas
+
+    public function getSubKelasSortir(Request $request)
+    {
+        $sub = Subkelas::where('kelas_id', $request->kelas_id)->get();
+        if (count($sub) > 0) {
+            return response()->json($sub);
+        }
+    }
+
+    public function prosesKelas($sub)
+    {
+        $pk = Subkelas::findOrFail($sub);
+        $ksiswa = Siswa::where('kelas_id', $sub)->get();
+        // $hp = $psiswa->sum('point');
+        // dd($ps);
+        return view('pages.frontend.pelanggaran.sortirListKelas', compact('pk', 'ksiswa'));
+    }
+
+    public function sortir(Request $request, $id, $sub)
+    {
+        $siswa = Siswa::findOrFail($id);
+        $items = Pelanggaran::with('siswa')
+            ->where('siswa_id', $id)
+            ->get();
+        // $item = Pelanggaran::sum('point');
+        $sb = Subkelas::findOrFail($sub);
+        
+        return view('pages.frontend.pelanggaran.sortirPoint', compact('siswa', 'items', 'sb'));
     }
 }

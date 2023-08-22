@@ -27,7 +27,7 @@ class SiswaController extends Controller
         // $data = Siswa::all();
         if(request()->ajax())
         {
-            $query = Siswa::query();
+            $query = Siswa::query()->orderBy('id', 'DESC');
 
             return Datatables::of($query)
                 ->addColumn('aksi', function($item) {
@@ -92,11 +92,13 @@ class SiswaController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt('siswa123**');
         $user->role = 'siswa';
+        $user->unit_id = $request->unit_id;
         $user->save();
 
         // Insert ke table siswa
         $request->request->add(['user_id' => $user->id]);
         $siswa = $request->all();
+        // dd($siswa);
         Siswa::create($siswa);
         
         return redirect()->route('siswa.index')->with('success', 'Data Berhasil Ditambah');

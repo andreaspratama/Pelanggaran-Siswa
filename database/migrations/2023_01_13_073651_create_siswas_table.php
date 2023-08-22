@@ -16,7 +16,7 @@ class CreateSiswasTable extends Migration
         Schema::create('siswas', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('nisn');
             $table->bigInteger('unit_id');
             $table->bigInteger('kelas_id');
