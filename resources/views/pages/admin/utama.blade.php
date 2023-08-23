@@ -75,11 +75,13 @@
           <a href="{{route('dashboard')}}" class="btn btn-dashboard">Masuk Dashboard</a>
         </div>
       </div>
+      @if (Auth::user()->role === 'gurubk')
       <div class="row">
         <div class="col-lg-12 tombol text-center mt-2">
           <a href="{{route('mobile')}}" class="btn btn-dashboard">Input Pelanggaran</a>
         </div>
       </div>
+      @endif
     </div>
     {{-- <div class="container">
       <div class="row ">

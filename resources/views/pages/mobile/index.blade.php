@@ -96,6 +96,11 @@
                     </div>
                     
                     <button type="submit" class="btn btn-primary">Simpan</button>
+                    <a href="{{route('utama')}}" class="btn btn-secondary">Dashboard</a>
+                    <form action="{{route('logout')}}" method="POST">
+                        @csrf
+                        <button class="btn btn-primary" type="submit">Keluar</button>
+                    </form>
                 </form>
             </div>
         </div>

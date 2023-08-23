@@ -17,24 +17,24 @@
                 <h6 class="m-0 font-weight-bold text-primary">Edit Data Kelas</h6>
             </div>
             <div class="card-body">
-                <form action="{{route('kelas.update', $item->id)}}" method="POST">
+                <form action="{{route('subkelas.update', $item->id)}}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
                       <label for="kelas">Kelas</label>
-                      <input type="text" class="form-control" name="kelas" placeholder="Masukan Kelas..." value="{{$item->kelas}}">
+                      <input type="text" class="form-control" name="sub" placeholder="Masukan Kelas..." value="{{$item->sub}}">
                     </div>
                     <div class="form-group">
-                        <label for="unit_id">Unit</label>
-                        <select class="form-control" name="unit_id">
-                          <option value="{{$item->unit_id}}">{{$item->unit->unit}}</option>
+                        <label for="unit_id">Kelas</label>
+                        <select class="form-control" name="kelas_id">
+                          <option value="{{$item->kelas_id}}">{{$item->kelas->kelas}}</option>
                           @foreach ($unit as $u)
-                            <option value="{{$u->id}}">{{$u->unit}}</option>
+                            <option value="{{$u->id}}">{{$u->kelas}}</option>
                           @endforeach
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{route('kelas.index')}}" class="btn btn-secondary">Batal</a>
+                    <a href="{{route('subkelas.index')}}" class="btn btn-secondary">Batal</a>
                 </form>
             </div>
         </div>

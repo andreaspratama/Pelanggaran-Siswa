@@ -284,7 +284,7 @@ class PelanggaranController extends Controller
     public function prosesKelas($sub)
     {
         $pk = Subkelas::findOrFail($sub);
-        $ksiswa = Siswa::where('kelas_id', $sub)->get();
+        $ksiswa = Siswa::where('sub_id', $sub)->get();
         // $hp = $psiswa->sum('point');
         // dd($ps);
         return view('pages.frontend.pelanggaran.sortirListKelas', compact('pk', 'ksiswa'));

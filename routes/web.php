@@ -36,7 +36,7 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/utama', function () {
         return view('pages.admin.utama');
-    });
+    })->name('utama');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });

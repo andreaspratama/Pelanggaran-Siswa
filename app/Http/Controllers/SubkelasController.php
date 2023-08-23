@@ -70,7 +70,7 @@ class SubkelasController extends Controller
         $item = Subkelas::findOrFail($id);
         $unit = Kelas::all();
 
-        return view('pages.admin.subkelas.edit', compact('item', 'kelas'));
+        return view('pages.admin.subkelas.edit', compact('item', 'unit'));
     }
 
     /**

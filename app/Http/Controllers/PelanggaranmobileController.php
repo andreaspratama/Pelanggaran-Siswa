@@ -11,6 +11,7 @@ use App\Models\Jnspelang;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Pelanggaran;
+use Illuminate\Support\Facades\Storage;
 
 class PelanggaranmobileController extends Controller
 {
