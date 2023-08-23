@@ -62,6 +62,40 @@
             </div>
         </div>
     </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{route('mobile')}}" data-toggle="" data-target=""
+            aria-expanded="true" aria-controls="">
+            <i class="fas fa-list"></i>
+            <span>Input Mobile</span>
+        </a>
+        {{-- <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                @if (auth()->user()->role === 'admin')
+                    <a class="collapse-item" href="{{route('siswa.index')}}">Siswa</a>
+                    <a class="collapse-item" href="{{route('guru.index')}}">Guru</a>
+                    <a class="collapse-item" href="{{route('unit.index')}}">Unit</a>
+                    <a class="collapse-item" href="{{route('kelas.index')}}">Kelas</a>
+                    <a class="collapse-item" href="{{route('subkelas.index')}}">Sub Kelas</a>
+                    <a class="collapse-item" href="{{route('thnakademik.index')}}">Tahun Akademik</a>
+                    <a class="collapse-item" href="{{route('jnspelang.index')}}">Jenis Pelanggaran</a>
+                    <a class="collapse-item" href="{{route('wk.index')}}">Wali Kelas</a>
+                    <a class="collapse-item" href="{{route('gb.index')}}">Guru BK</a>
+                    <a class="collapse-item" href="{{route('user.index')}}">User</a>
+                @endif
+                @if (auth()->user()->role === 'guru')
+                    <a class="collapse-item" href="{{route('pelanggaran.create')}}">Input Pelanggaran</a>
+                    <a class="collapse-item" href="{{route('pelanggaran.index')}}">List Pelanggaran</a>
+                    <a class="collapse-item" href="{{route('pelanggaranSortir')}}">List Pelanggaran Siswa</a>
+                @endif
+                @if (auth()->user()->role === 'gurubk')
+                    <a class="collapse-item" href="{{route('pelanggaran.create')}}">Input Pelanggaran</a>
+                    <a class="collapse-item" href="{{route('pelanggaran.index')}}">List Pelanggaran</a>
+                    <a class="collapse-item" href="{{route('pelanggaranSortir')}}">List Pelanggaran Siswa</a>
+                @endif --}}
+                {{-- <a class="collapse-item" href="{{route('coba.index')}}">Coba</a> --}}
+            {{-- </div>
+        </div> --}}
+    </li>
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">

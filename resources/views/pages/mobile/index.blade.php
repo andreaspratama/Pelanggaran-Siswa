@@ -12,7 +12,7 @@
   </head>
   <body>
     <div class="container">
-        <div class="card">
+        <div class="card mb-5 mt-5">
             <div class="card-header">
               Form Pelanggaran
             </div>
@@ -96,11 +96,7 @@
                     </div>
                     
                     <button type="submit" class="btn btn-primary">Simpan</button>
-                    <a href="{{route('utama')}}" class="btn btn-secondary">Dashboard</a>
-                    <form action="{{route('logout')}}" method="POST">
-                        @csrf
-                        <button class="btn btn-primary" type="submit">Keluar</button>
-                    </form>
+                    <a href="{{route('dashboard')}}" class="btn btn-secondary">Dashboard</a>
                 </form>
             </div>
         </div>
